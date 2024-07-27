@@ -2,6 +2,7 @@ import styled, {css} from "styled-components";
 import {primary} from "@/lib/colors";
 
 export const ButtonStyle = css`
+
   border:0;
   padding: 5px 15px;
   border-radius: 5px;
@@ -15,6 +16,7 @@ export const ButtonStyle = css`
     height: 16px;
     margin-right: 5px;
   }
+
   ${props => props.block && css`
     display: block;
     width: 100%;
