@@ -15,7 +15,7 @@ export default function HomePage({featuredProduct, newProducts}){
 
       <Header />  
 
-      <Featured product= {featuredProduct} />  
+      <Featured product= {featuredProduct} />   
 
       <NewProducts products = {newProducts} />  
       

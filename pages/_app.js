@@ -1,3 +1,4 @@
+import { CartContextProvider } from '@/components/CartContext';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { createGlobalStyle } from "styled-components";
@@ -24,7 +25,11 @@ export default function App({ Component, pageProps }) {
     </Helmet>
 
       <GlobalStyles />
-     <Component {...pageProps} /> 
+      <CartContextProvider>
+        <Component {...pageProps} /> 
+
+
+      </CartContextProvider>
 
     </>
     
