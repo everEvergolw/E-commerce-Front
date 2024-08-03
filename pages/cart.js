@@ -9,7 +9,6 @@ import Table from "@/components/Table";
 import Input from "@/components/Input";
 
 const ColumnsWrapper = styled.div`
-
   display: grid;
   grid-template-columns: 1fr;
   @media screen and (min-width: 768px) {
@@ -26,9 +25,8 @@ const Box = styled.div`
 `;
 
 const ProductInfoCell = styled.td`
-  padding: 10px 0; 
+  padding: 10px 0;
 `;
-
 
 const ProductImageBox = styled.div`
   width: 70px;
@@ -54,7 +52,6 @@ const ProductImageBox = styled.div`
   }
 `;
 
-
 const QuantityLabel = styled.span`
   padding: 0 15px;
   display: block;
@@ -64,27 +61,21 @@ const QuantityLabel = styled.span`
   }
 `;
 
-
 const CityHolder = styled.div`
   display:flex;
   gap: 5px;
 `;
 
-
 export default function CartPage() {
   const {cartProducts,addProduct,removeProduct,clearCart} = useContext(CartContext);
-
   const [products,setProducts] = useState([]);
-
   const [name,setName] = useState('');
   const [email,setEmail] = useState('');
   const [city,setCity] = useState('');
   const [postalCode,setPostalCode] = useState('');
   const [streetAddress,setStreetAddress] = useState('');
   const [country,setCountry] = useState('');
-  const [isSuccess,setIsSuccess] = useState(false); 
-
-
+  const [isSuccess,setIsSuccess] = useState(false);
   useEffect(() => {
     if (cartProducts.length > 0) {
       axios.post('/api/cart', {ids:cartProducts})
@@ -93,10 +84,8 @@ export default function CartPage() {
         })
     } else {
       setProducts([]);
-    } 
+    }
   }, [cartProducts]);
-
-
   useEffect(() => {
     if (typeof window === 'undefined') {
       return;
@@ -106,18 +95,15 @@ export default function CartPage() {
       clearCart();
     }
   }, []);
-
   function moreOfThisProduct(id) {
     addProduct(id);
   }
-
-  function lessOfThisProduct(id) { 
-
+  function lessOfThisProduct(id) {
     removeProduct(id);
-  
-  } 
- 
-  async function goToPayment() { 
+  }
+
+
+  async function goToPayment() {
     const response = await axios.post('/api/checkout', {
       name,email,city,postalCode,streetAddress,country,
       cartProducts,
@@ -127,13 +113,15 @@ export default function CartPage() {
     }
   }
 
-  let total = 0;
 
+
+  let total = 0;
   for (const productId of cartProducts) {
     const price = products.find(p => p._id === productId)?.price || 0;
     total += price;
   }
 
+  
   if (isSuccess) {
     return (
       <>
@@ -149,6 +137,7 @@ export default function CartPage() {
       </>
     );
   }
+
   return (
     <>
       <Header />
@@ -156,21 +145,18 @@ export default function CartPage() {
         <ColumnsWrapper>
           <Box>
             <h2>Cart</h2>
-
             {!cartProducts?.length && (
               <div>Your cart is empty</div>
             )}
             {products?.length > 0 && (
-
               <Table>
                 <thead>
                   <tr>
                     <th>Product</th>
                     <th>Quantity</th>
-                    <th>Price</th> 
+                    <th>Price</th>
                   </tr>
                 </thead>
-
                 <tbody>
                   {products.map(product => (
                     <tr key={product._id}>
@@ -183,12 +169,9 @@ export default function CartPage() {
                       <td>
                         <Button
                           onClick={() => lessOfThisProduct(product._id)}>-</Button>
-
                         <QuantityLabel>
-
                           {cartProducts.filter(id => id === product._id).length}
                         </QuantityLabel>
-
                         <Button
                           onClick={() => moreOfThisProduct(product._id)}>+</Button>
                       </td>
@@ -203,30 +186,23 @@ export default function CartPage() {
                     <td>${total}</td>
                   </tr>
                 </tbody>
-
               </Table>
             )}
           </Box>
-
-
           {!!cartProducts?.length && (
             <Box>
-
               <h2>Order information</h2>
               <Input type="text"
                      placeholder="Name"
                      value={name}
                      name="name"
                      onChange={ev => setName(ev.target.value)} />
-
               <Input type="text"
                      placeholder="Email"
                      value={email}
-                     name="email" 
+                     name="email"
                      onChange={ev => setEmail(ev.target.value)}/>
-
-              <CityHolder> 
-
+              <CityHolder>
                 <Input type="text"
                        placeholder="City"
                        value={city}
@@ -237,9 +213,7 @@ export default function CartPage() {
                        value={postalCode}
                        name="postalCode"
                        onChange={ev => setPostalCode(ev.target.value)}/>
-
               </CityHolder>
-
               <Input type="text"
                      placeholder="Street Address"
                      value={streetAddress}
@@ -250,11 +224,11 @@ export default function CartPage() {
                      value={country}
                      name="country"
                      onChange={ev => setCountry(ev.target.value)}/>
-              <Button black block 
+
+              <Button black block
                       onClick={goToPayment}>
                 Continue to payment
               </Button>
-
             </Box>
           )}
         </ColumnsWrapper>
