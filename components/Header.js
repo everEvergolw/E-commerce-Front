@@ -53,7 +53,7 @@ const NavButton = styled.button`
   width: 30px;
   height: 30px;
   border:0;
-  color: white;
+  color: white; 
   cursor: pointer;
   position: relative;
   z-index: 3;
@@ -65,7 +65,10 @@ const NavButton = styled.button`
 export default function Header() {
   const {cartProducts} = useContext(CartContext);
   const [mobileNavActive,setMobileNavActive] = useState(false);
+
+
   return (
+
     <StyledHeader>
       <Center>
         <Wrapper>
@@ -83,5 +86,6 @@ export default function Header() {
         </Wrapper>
       </Center>
     </StyledHeader>
+    
   );
 }
